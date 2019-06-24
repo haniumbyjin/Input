@@ -1,13 +1,21 @@
 import React from 'react';
-import logo from './logo.svg';
+import { Component } from "react";
 import './App.css';
+import { observer, inject } from 'mobx-react';
 
-function App() {
-  return (
-    <div className="App">
-      Conference Manager
-    </div>
-  );
+@inject('stores')
+@observer
+class App extends Component {
+
+  render() {
+    const  { testData } = this.props.stores.example;
+    return (
+      <div className="App">
+        Conference Manager <br/><br/><br/>
+        mobx 변수 사용 => {testData}
+      </div>
+    );
+  }
 }
 
 export default App;
