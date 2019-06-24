@@ -2,6 +2,7 @@ package com.conference.chatting;
 
 import com.conference.chatting.model.request.TestReq;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +31,7 @@ public class TestControllerTest {
         mockMvc.perform(get("/chat/get/test?testParam=test"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.code").value(0))
-                .andExpect(jsonPath("$.message").value("success"));
+                .andExpect(jsonPath("$.message").value("성공"));
 
     }
 
@@ -44,13 +45,38 @@ public class TestControllerTest {
         String json = asJsonString(request);
 
         mockMvc.perform(post("/chat/post/test")
-                    .header("testHeader", "testHeader")
-                    .content(json)
-                    .contentType(MediaType.APPLICATION_JSON_UTF8))
+                .header("testHeader", "testHeader")
+                .content(json)
+                .contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.code").value(0))
-                .andExpect(jsonPath("$.message").value("success"));
+                .andExpect(jsonPath("$.message").value("성공"));
 
+    }
+
+    @Test
+    public void postTestWithException() throws Exception {
+
+        TestReq request = TestReq.builder()
+                .input("Example Exception")
+                .build();
+
+        String json = asJsonString(request);
+
+        mockMvc.perform(post("/chat/post/test")
+                .header("testHeader", "testHeader")
+                .content(json)
+                .contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.code").value(999))
+                .andExpect(jsonPath("$.message").value("예제 오류 입니다."));
+
+    }
+
+    @Before
+    public void initializeTest() {
+        // Test가 실행되기 전 코드를 추가할 수 있습니다.
+        // Transactional 선언을 통해 DB 작업 이후 롤백이 가능합니다.
     }
 
     public String asJsonString(Object obj) {
