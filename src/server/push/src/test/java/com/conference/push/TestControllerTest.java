@@ -1,6 +1,7 @@
 package com.conference.push;
 
 import com.conference.push.model.stock.StockTransaction;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,13 +25,34 @@ public class TestControllerTest {
 
     @Test
     public void getTest() throws Exception {
-        mockMvc.perform(get("/stock/transaction")).andExpect(status().isOk()).andDo(print());
+        mockMvc.perform(get("/stock/transaction"))
+                .andExpect(status().isOk())
+                .andDo(print());
     }
 
     @Test
     public void testSseEmitter() throws Exception {
         mockMvc.perform(get("/sse-events"))
                 .andExpect(content().contentType("text/event-stream;charset=UTF-8"))
-                .andExpect(header().string("Content-Type", "text/event-stream;charset=UTF-8")).andDo(print());
+                .andExpect(header().string("Content-Type", "text/event-stream;charset=UTF-8"))
+                .andDo(print());
+    }
+
+    @Test
+    public void testSseEmitter2() throws Exception {
+        mockMvc.perform(get("/sse-events/test"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.code").value(0))
+                .andExpect(jsonPath("$.message").value("SUCCESS"))
+                .andExpect(content().contentType("application/stream+json;charset=UTF-8"))
+                .andExpect(header().string("Content-Type", "application/stream+json;charset=UTF-8"))
+                .andDo(print());
+    }
+
+
+    @Before
+    public void initializeTest() {
+        // Test가 실행되기 전 코드를 추가할 수 있습니다.
+        // Transactional 선언을 통해 DB 작업 이후 롤백이 가능합니다.
     }
 }

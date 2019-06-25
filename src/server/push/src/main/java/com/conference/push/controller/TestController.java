@@ -25,7 +25,7 @@ public class TestController {
     @Autowired
     TestService testService;
 
-    @GetMapping(produces = MediaType.APPLICATION_STREAM_JSON_VALUE)
+    @GetMapping(produces = "application/stream+json")
     public Flux<StockTransaction> stockTransactionEvents(){
         return testService.getStockTransactions();
     }
