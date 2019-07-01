@@ -14,6 +14,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import com.google.gson.Gson;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -25,11 +26,13 @@ public class KafkaControllerTest {
 
     @Test
     public void kafkaTest() throws Exception {
+        Message message = new Message();
+        message.setMessage("hi");
+        Gson gson = new Gson();
+        String json = gson.toJson(message);
 
         mockMvc.perform(post("/kafka/test")
-                .content("{\n" +
-                        "\t\"message\" : \"hi\"\n" +
-                        "}")
+                .content(json)
                 .contentType(MediaType.APPLICATION_JSON_UTF8)) // content의 type을 명시합니다.
                 .andExpect(status().isOk())
                 .andDo(print());
