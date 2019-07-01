@@ -1,7 +1,9 @@
 import React from 'react';
 import { Component } from "react";
 import './App.css';
+import Meet from "./routes/Meet";
 import { observer, inject } from 'mobx-react';
+import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
 
 @inject('stores')
 @observer
@@ -10,10 +12,19 @@ class App extends Component {
   render() {
     const  { testData } = this.props.stores.example;
     return (
-      <div className="App">
+
+    <Router>
+    <div className="App">
         Conference Manager <br/><br/><br/>
         mobx 변수 사용 => {testData}
-      </div>
+        <div >
+        <Switch>
+        <Route exact path="/" component={Meet}></Route>
+        <Route path="/meet" component={Meet}></Route>
+        </Switch>
+        </div>
+    </div>
+   </Router>
     );
   }
 }
