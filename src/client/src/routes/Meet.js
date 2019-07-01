@@ -12,7 +12,7 @@ class Meet extends Component {
     return (
       
       <div>
-          Meet
+          "Meet" page
       </div>
     );
   }

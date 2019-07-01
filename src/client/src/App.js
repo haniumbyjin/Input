@@ -15,11 +15,11 @@ class App extends Component {
 
     <Router>
     <div className="App">
-        Conference Manager <br/><br/><br/>
-        mobx 변수 사용 => {testData}
+        Conference Manager <br/>
+        mobx 변수 사용 => {testData}<br/><br/>
         <div >
         <Switch>
-        <Route exact path="/" component={Meet}></Route>
+        {/* <Route exact path="/" component={Meet}></Route> */}
         <Route path="/meet" component={Meet}></Route>
         </Switch>
         </div>
