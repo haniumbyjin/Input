@@ -7,5 +7,5 @@ import lombok.Data;
 @Builder
 public class TestRes {
 
-    private String data;
+    private Message data;
 }
