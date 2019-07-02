@@ -4,11 +4,9 @@ import { observer, inject } from 'mobx-react';
 import TextField from '@material-ui/core/TextField';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
-import FormLabel from '@material-ui/core/FormLabel';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import RadioGroup from '@material-ui/core/RadioGroup';
-import Radio from '@material-ui/core/Radio';
 import Paper from '@material-ui/core/Paper';
+import Avatar from '@material-ui/core/Avatar';
+import Typography from '@material-ui/core/Typography';
 
 const styles = theme => ({
   root: {
@@ -18,12 +16,18 @@ const styles = theme => ({
     height: '100%',
     width: 500,
     margin: 10,
+    paddingTop: 10
   },
   field: {
     marginTop: '100%',
     width: '90%',
     height: '10%',
-  }
+  },
+  chat_paper: {
+    maxWidth: 400,
+    margin: `${theme.spacing(1)}px auto`,
+    padding: theme.spacing(2),
+  },
 });
 
 
@@ -32,14 +36,24 @@ const styles = theme => ({
 class Meet extends Component{
   constructor(props) {
     super(props);
+
+    
     this.state = {
-      spacing : 2
+      spacing : 2,
+      // value : '',
     }
   }
+
+  sendmessage(message) {
+    alert(message);
+  }
+
+  
 
   render() {
 
     const { classes } = this.props;
+    const  { chatList } = this.props.stores.chat;
 
     const layout = (
       <Grid container className={classes.root} spacing={2}>
@@ -54,9 +68,30 @@ class Meet extends Component{
             <Grid item>
               <Paper className={classes.paper}>
                 <div>
-                  chatting
+                  
+                  {chatList.map(value => (
+                  <Paper className={classes.chat_paper}>
+                  <Grid container wrap="nowrap" spacing={2}>
+                    <Grid item>
+                      <Avatar>Y</Avatar>
+                    </Grid>
+                    <Grid item xs zeroMinWidth>
+                      <Typography noWrap>{value}</Typography>
+                    </Grid>
+                  </Grid>
+                </Paper>
+                ))}
                 </div>
+                
               <TextField
+              onKeyPress={(ev) => {
+                console.log(`Pressed keyCode ${ev.key}`);
+                if (ev.key === 'Enter') {
+                  // Do code here
+                  this.sendmessage("hi");
+                  ev.preventDefault();
+                }
+              }}
                 className={classes.field}
                 id="outlined-full-width"
                 label="Chat"
@@ -67,6 +102,8 @@ class Meet extends Component{
                 InputLabelProps={{
                   shrink: true,
                 }}
+                // value={this.state.value}
+                // onChange={this.handleChange}
               />
                 </Paper>
             </Grid>
