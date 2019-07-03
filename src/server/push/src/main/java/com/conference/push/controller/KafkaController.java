@@ -22,7 +22,6 @@ public class KafkaController {
 
     private KafkaTemplate<String, Message> kafkaTemplate;
 
-    private static final Logger logger = getLogger(KafkaController.class);
 
     @Autowired
     public KafkaController(KafkaTemplate<String, Message> kafkaTemplate) {
@@ -32,7 +31,7 @@ public class KafkaController {
     @PostMapping("/test")
     public ResponseEntity send(@RequestBody Message testParam){
 
-        logger.info("kafka - send");
+        log.info("kafka - send");
 
         TestRes result = TestRes.builder().data(testParam).build();
         sendMessage("tutorialspoint", testParam);
@@ -46,6 +45,6 @@ public class KafkaController {
 
     @KafkaListener(topics = "tutorialspoint", groupId = "group-id")
     public void listen(String message) {
-        logger.info("Received Messasge in group - group-id: " + message);
+        log.info("Received Messasge in group - group-id: " + message);
     }
 }
