@@ -4,6 +4,7 @@ import './App.css';
 import Meet from "./routes/Meet";
 import { observer, inject } from 'mobx-react';
 import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
+import FileUpload from './component/FileUpload';
 
 @inject('stores')
 @observer
@@ -23,10 +24,13 @@ class App extends Component {
         <Route path="/meet" component={Meet}></Route>
         </Switch>
         </div>
+        <div>
+            <FileUpload/>
+        </div>
     </div>
    </Router>
     );
+
   }
 }
-
 export default App;
