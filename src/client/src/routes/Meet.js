@@ -94,12 +94,12 @@ class Meet extends Component{
             </Grid>
             <Grid item>
               <Paper className={classes.paper}>
-              <ScrollArea
+              {/* <ScrollArea
             speed={0.8}
             className="area"
             contentClassName="content"
             horizontal={false}
-            > 
+            >  */}
                 <div className={classes.scroll_div}>
                   {chatList.map(value => (
                   <Paper className={classes.chat_paper}>
@@ -114,7 +114,7 @@ class Meet extends Component{
                 </Paper>
                 ))}
                 </div>
-                </ScrollArea>
+                {/* </ScrollArea> */}
                 <form onSubmit={this.sendMessage}>
               <TextField
               onKeyPress={(ev) => {
