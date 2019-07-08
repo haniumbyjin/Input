@@ -54,6 +54,7 @@
             <artifactId>google-collections</artifactId>
             <version>1.0</version>
         </dependency>
+
     </dependencies>
 
     <build>
