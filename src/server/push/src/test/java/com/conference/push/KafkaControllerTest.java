@@ -1,7 +1,9 @@
 package com.conference.push;
 
 import com.conference.push.model.response.Message;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +29,7 @@ public class KafkaControllerTest {
     @Test
     public void kafkaTest() throws Exception {
 
+
         Message message = Message.builder()
                 .message("hi")
                 .build();
@@ -40,6 +43,7 @@ public class KafkaControllerTest {
                 .andDo(print());
     }
 
+
     public String asJsonString(Object obj) {
         try {
             final ObjectMapper mapper = new ObjectMapper();
@@ -48,4 +52,5 @@ public class KafkaControllerTest {
             throw new RuntimeException(e);
         }
     }
+
 }
