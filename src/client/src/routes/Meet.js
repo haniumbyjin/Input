@@ -7,19 +7,25 @@ import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
+import ScrollArea from 'react-scrollbar';
+
+// var Scroll  = require('react-scroll');
 
 const styles = theme => ({
+
+  
   root: {
     flexGrow: 1,
   },
   paper: {
-    height: '100%',
+    height: 700,
     width: 500,
     margin: 10,
     paddingTop: 10
   },
   field: {
-    marginTop: '100%',
+    marginTop: '70%',
+    marginBottom: '10%',
     width: '90%',
     height: '10%',
   },
@@ -28,24 +34,45 @@ const styles = theme => ({
     margin: `${theme.spacing(1)}px auto`,
     padding: theme.spacing(2),
   },
+  scroll_div: {
+    height: 250
+  }
 });
 
 
 @inject('stores')
 @observer
 class Meet extends Component{
+
+  state = {
+    value:'',
+  }
+
   constructor(props) {
     super(props);
 
     
     this.state = {
       spacing : 2,
-      // value : '',
     }
   }
 
-  sendmessage(message) {
-    alert(message);
+  sendmessage() {
+    debugger;
+    const  { chatList } = this.props.stores.chat;
+    alert(this.state.value);
+    chatList.push(this.state.value);
+    this.setState(
+      {
+        value : ''
+      }
+    )
+  }
+
+  handleChange = (e) => {
+    this.setState({
+        [e.target.name]: e.target.value //각 name에 맞는 value값 대입
+    })
   }
 
   
@@ -67,8 +94,13 @@ class Meet extends Component{
             </Grid>
             <Grid item>
               <Paper className={classes.paper}>
-                <div>
-                  
+              <ScrollArea
+            speed={0.8}
+            className="area"
+            contentClassName="content"
+            horizontal={false}
+            > 
+                <div className={classes.scroll_div}>
                   {chatList.map(value => (
                   <Paper className={classes.chat_paper}>
                   <Grid container wrap="nowrap" spacing={2}>
@@ -82,13 +114,14 @@ class Meet extends Component{
                 </Paper>
                 ))}
                 </div>
-                
+                </ScrollArea>
+                <form onSubmit={this.sendMessage}>
               <TextField
               onKeyPress={(ev) => {
                 console.log(`Pressed keyCode ${ev.key}`);
                 if (ev.key === 'Enter') {
                   // Do code here
-                  this.sendmessage("hi");
+                  this.sendmessage();
                   ev.preventDefault();
                 }
               }}
@@ -96,15 +129,18 @@ class Meet extends Component{
                 id="outlined-full-width"
                 label="Chat"
                 placeholder="Placeholder"
-                // fullWidth
+                fullWidth
                 margin="normal"
                 variant="outlined"
                 InputLabelProps={{
                   shrink: true,
                 }}
-                // value={this.state.value}
-                // onChange={this.handleChange}
+                name="value"
+                value={this.state.value}
+                onChange={this.handleChange}
               />
+              </form>
+             
                 </Paper>
             </Grid>
           {/* ))} */}
