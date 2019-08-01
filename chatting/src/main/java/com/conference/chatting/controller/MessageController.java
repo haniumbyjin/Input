@@ -3,6 +3,7 @@ package com.conference.chatting.controller;
 import com.conference.chatting.model.Message;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class MessageController {
 
     @MessageMapping("/chat")
+    @SendTo("topic/roodId")
     public Message broadcasting(Message message) throws Exception{
         return message;
     }
