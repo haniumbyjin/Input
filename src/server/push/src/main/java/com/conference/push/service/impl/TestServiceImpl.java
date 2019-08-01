@@ -1,5 +1,9 @@
 package com.conference.push.service.impl;
 
+import com.conference.push.exception.ExampleException;
+import com.conference.push.model.request.TestReq;
+import com.conference.push.model.response.Message;
+import com.conference.push.model.response.TestRes;
 import com.conference.push.model.stock.Stock;
 import com.conference.push.model.stock.StockTransaction;
 import com.conference.push.service.TestService;
@@ -63,6 +67,32 @@ public class TestServiceImpl implements TestService {
         float min = 30;
         float max = 50;
         return min + roundFloat(new Random().nextFloat() * (max - min));
+    }
+
+    @Override
+    public TestRes test(String testParam) {
+
+        TestRes result = TestRes.builder()
+                .data(Message.builder().message("get - test").build())
+                .build();
+
+        return result;
+
+    }
+
+    @Override
+    public TestRes test(TestReq testReq, String testHeader) {
+
+        if (testReq.getInput().equals("Example Exception")) {
+            throw new ExampleException();
+        }
+
+        TestRes result = TestRes.builder()
+                .data(Message.builder().message("post - test").build())
+                .build();
+
+        return result;
+
     }
 
 }
