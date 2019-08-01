@@ -11,5 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Message {
 
+    String userId;
     String message;
+    String timeStamp;
 }

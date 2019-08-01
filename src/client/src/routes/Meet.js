@@ -8,6 +8,8 @@ import Paper from '@material-ui/core/Paper';
 import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
 import InfiniteScroll from 'react-infinite-scroll-component';
+import Fetch from "json-fetch";
+import SockJsClient from "react-stomp";
 
 const styles = theme => ({
 
@@ -53,20 +55,50 @@ class Meet extends Component {
 
     this.state = {
       spacing: 2,
+      clientConnected : false,
     }
   }
 
-  sendmessage() {
-    debugger;
+  onMessageReceive = (chat, topic) => {
+    // alert(JSON.stringify(chat) + " @ " +  JSON.stringify(this.state.value)+" @ " + JSON.stringify(topic));
     const { chatList } = this.props.stores.chat;
-    alert(this.state.value);
-    chatList.push(this.state.value);
-    this.setState(
-      {
-        value: ''
-      }
-    )
+    var receive_message = {
+      "userId" : chat.userId,
+      "message" : chat.message,
+      "timeStamp" : chat.timeStamp,
+    }
+    chatList.push(receive_message);
   }
+
+
+  // componentWillMount() {
+  //   console.log("call history");
+  //   Fetch("/history", {
+  //     method: "GET"
+  //   }).then((response) => {
+  //     // this.setState({ messages: response.body });
+  //   });
+  // }
+
+  sendMessage(){
+    const { userId} = this.props.stores.chat;
+    try {
+      var send_message = {
+        "userId" : userId,
+        "message" : this.state.value,
+      }
+      this.clientRef.sendMessage("/app/chat", JSON.stringify(send_message));
+      this.setState(
+        {
+           value: ''
+        }
+      )
+      return true;
+    } catch(e) {
+      return false;
+    }
+  }
+
 
   handleChange = (e) => {
     this.setState({
@@ -78,19 +110,33 @@ class Meet extends Component {
 
   render() {
 
+    const wsSourceUrl = "http://localhost:8080/socketconnect";
+
     const { classes } = this.props;
     const { chatList } = this.props.stores.chat;
 
+    const websocket = (
+      <div>
+        
+        <SockJsClient url={ wsSourceUrl } topics={["/topic/roomId"]}
+          onMessage={ this.onMessageReceive } ref={ (client) => { this.clientRef = client }}
+          onConnect={ () => {this.setState({ clientConnected: true }) } }
+          onDisconnect={ () => { this.setState({ clientConnected: false }) } }
+          debug={ false } style={[{width:'100%', height:'100%'}]}/>
+      </div>
+    )
+
     const chatting = (
       <div className={classes.scroll_div}>
-      {chatList.map(value => (
-        <Paper className={classes.chat_paper}>
+      {chatList.map((chat, index) => (
+        <Paper className={classes.chat_paper} key={index}>
           <Grid container wrap="nowrap" spacing={2}>
             <Grid item>
               <Avatar>Y</Avatar>
             </Grid>
             <Grid item xs zeroMinWidth>
-              <Typography noWrap>{value}</Typography>
+              <Typography noWrap>{chat.userId} {chat.timeStamp}</Typography>
+              <Typography noWrap>{chat.message}</Typography>
             </Grid>
           </Grid>
         </Paper>
@@ -147,7 +193,7 @@ class Meet extends Component {
                       console.log(`Pressed keyCode ${ev.key}`);
                       if (ev.key === 'Enter') {
                         // Do code here
-                        this.sendmessage();
+                        this.sendMessage();
                         ev.preventDefault();
                       }
                     }}
@@ -182,6 +228,7 @@ class Meet extends Component {
       <div>
         "Meet" page <br />
         {layout}
+        {websocket}
 
       </div>
     );
