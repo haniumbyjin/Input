@@ -1,1 +1,9 @@
-
+server:
+  port: 8080
+#
+#spring:
+#  kafka:
+#    consumer:
+#      group-id: kafka-intro
+#    bootstrap:
+#      servers: localhost:9092
