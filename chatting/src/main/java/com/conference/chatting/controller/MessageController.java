@@ -45,7 +45,7 @@ public class MessageController {
 
         //kafka로 보내기
         log.info("kafka - send");
-//        kafkaTemplate.send("tutorialspoint", message);
+        kafkaTemplate.send("tutorialspoint", message);
 
 
         return message;
