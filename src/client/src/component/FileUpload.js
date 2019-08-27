@@ -10,9 +10,6 @@ constructor(){
         fileName :"",
         status: false
     }
-    // this.fileHandler = this.fileHandler.bind(this);
-    // this.fileUploadHandler =this.fileUploadHandler.bind(this);
-    // this.removeImage = this.removeImage.bind(this);
 }
 
 fileHandler = (e) => {
@@ -38,19 +35,13 @@ fileHandler = (e) => {
 
 fileUploadHandler = () => {
     if(this.state.currentImage ==null){
-  //   Popup.alert('선택된 파일 없음');
-  //      return;
+
     }else{
     const fd = new FormData();
              fd.append('upload',this.state.currentImage);
     
           axios({
            
-            //'Content-Type': 'multipart/form-data',
-            // headers : {
-            //     'Accept': 'application/json',
-            //     'Content-Type': 'multipart/form-data'
-            // },
             params: {
                 upload: fd
             },

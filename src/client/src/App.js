@@ -21,7 +21,6 @@ class App extends Component {
         mobx 변수 사용 => {testData}<br/><br/>
         <div >
         <Switch>
-        {/* <Route exact path="/" component={Meet}></Route> */}
         <Route path="/file" component={FilePage}></Route>
         <Route path="/meet" component={Meet}></Route>
         </Switch>
