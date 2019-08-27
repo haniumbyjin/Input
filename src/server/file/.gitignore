@@ -1,39 +1,8 @@
-HELP.md
-target/
-!.mvn/wrapper/maven-wrapper.jar
-!**/src/main/**
-!**/src/test/**
 
-### STS ###
-.apt_generated
-.classpath
-.factorypath
-.project
-.settings
-.springBeans
-.sts4-cache
+# Created by https://www.gitignore.io/api/macos,maven,intellij
+# Edit at https://www.gitignore.io/?templates=macos,maven,intellij
 
-### IntelliJ IDEA ###
-.idea
-*.iws
-*.iml
-*.ipr
-
-### NetBeans ###
-/nbproject/private/
-/nbbuild/
-/dist/
-/nbdist/
-/.nb-gradle/
-build/
-
-### VS Code ###
-.vscode/
-
-# Created by https://www.gitignore.io/api/macos,maven,intellij+all
-# Edit at https://www.gitignore.io/?templates=macos,maven,intellij+all
-
-### Intellij+all ###
+### Intellij ###
 # Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, CLion, Android Studio and WebStorm
 # Reference: https://intellij-support.jetbrains.com/hc/en-us/articles/206544839
 
@@ -67,6 +36,8 @@ build/
 # .idea/modules.xml
 # .idea/*.iml
 # .idea/modules
+# *.iml
+# *.ipr
 
 # CMake
 cmake-build-*/
@@ -101,21 +72,13 @@ fabric.properties
 # Android studio 3.1+ serialized cache file
 .idea/caches/build_file_checksums.ser
 
-# JetBrains templates
-**___jb_tmp___
+### Intellij Patch ###
+# Comment Reason: https://github.com/joeblau/gitignore.io/issues/186#issuecomment-215987721
 
-### Intellij+all Patch ###
-# Ignores the whole .idea folder and all .iml files
-# See https://github.com/joeblau/gitignore.io/issues/186 and https://github.com/joeblau/gitignore.io/issues/360
-
-.idea/
-
-# Reason: https://github.com/joeblau/gitignore.io/issues/186#issuecomment-249601023
-
-*.iml
-modules.xml
-.idea/misc.xml
-*.ipr
+# *.iml
+# modules.xml
+# .idea/misc.xml
+# *.ipr
 
 # Sonarlint plugin
 .idea/sonarlint
@@ -160,4 +123,4 @@ buildNumber.properties
 .mvn/timing.properties
 .mvn/wrapper/maven-wrapper.jar
 
-# End of https://www.gitignore.io/api/macos,maven,intellij+all
+# End of https://www.gitignore.io/api/macos,maven,intellij
