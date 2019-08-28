@@ -29,14 +29,13 @@ fileHandler = (e) => {
         
 
         var tmp = reader.readAsDataURL(e.target.files[0]);
-       // en.readAsDataURL(file);
-        this.setState({encodeImg: en.readAsDataURL(file)})
-
         reader.onload=(e) =>{
             document.getElementById("cover").setAttribute('src',e.target.result);
-     //       document.getElementById("source").innerHTML = tmp;
+            document.getElementById("source").innerHTML = tmp;
             console.log(e.target.result);
-        }
+
+          this.setState({encodeImg: e.target.result})
+    }
   
       }    
     }else{
@@ -48,16 +47,12 @@ fileUploadHandler = () => {
     if(this.state.currentImage ==null){
 
     }else{
-    // const fd = new FormData();
-    //          fd.append('upload',this.state.currentImage);
-
           axios({
             params: {
                 upload: this.state.encodeImg
             },
             url : 'http://localhost:8082/upload',
             method:'GET',
-        //    data: fd,
             headers: 
                 {Accept: 'application/json'}
                 // 'Content-Type': `multipart/form-data; boundary=${fd._boundary}`}
@@ -91,6 +86,8 @@ render(){
                 <p className="msg">{this.state.fileName}</p>
                 <button onClick={this.removeImage}>X</button>
                 <img id = "cover" src = ""/>
+                <p id="source">{this.state.encodeImg}</p>
+
                 </div>
             ):(
                 <p>선택한 이미지 없음</p>
