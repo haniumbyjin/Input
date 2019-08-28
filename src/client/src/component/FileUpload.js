@@ -8,7 +8,8 @@ constructor(){
     this.state={
         currentImage : "",
         fileName :"",
-        status: false
+        status: false,
+        encodeImg: ""
     }
 }
 
@@ -23,10 +24,20 @@ fileHandler = (e) => {
 
     if(e.target.files && e.target.files[0]){
         var reader = new FileReader();
+        var en = new FileReader();
+        var file = e.target.files[0]
+        
+
+        var tmp = reader.readAsDataURL(e.target.files[0]);
+       // en.readAsDataURL(file);
+        this.setState({encodeImg: en.readAsDataURL(file)})
+
         reader.onload=(e) =>{
             document.getElementById("cover").setAttribute('src',e.target.result);
+     //       document.getElementById("source").innerHTML = tmp;
+            console.log(e.target.result);
         }
-        reader.readAsDataURL(e.target.files[0]);
+  
       }    
     }else{
         console.log("파일 없음");
@@ -37,20 +48,19 @@ fileUploadHandler = () => {
     if(this.state.currentImage ==null){
 
     }else{
-    const fd = new FormData();
-             fd.append('upload',this.state.currentImage);
-    
+    // const fd = new FormData();
+    //          fd.append('upload',this.state.currentImage);
+
           axios({
-           
             params: {
-                upload: fd
+                upload: this.state.encodeImg
             },
             url : 'http://localhost:8082/upload',
             method:'GET',
-            data: fd,
+        //    data: fd,
             headers: 
-                {Accept: 'application/json',
-                'Content-Type': `multipart/form-data; boundary=${fd._boundary}`}
+                {Accept: 'application/json'}
+                // 'Content-Type': `multipart/form-data; boundary=${fd._boundary}`}
           })
            .then(function(response){
                 console.log(response.data.message);
@@ -64,13 +74,14 @@ removeImage = () => {
         currentImage:"",
         fileName: "",
         status :false,
+        encodeImg: ""
     })
 }
 
 render(){
     return(
         <div className="App">
-            <input type="file" name="file" onChange={this.fileHandler}/>
+            <input type="file" name="file" id="file" onChange={this.fileHandler}/>
         
         <button onClick={this.fileUploadHandler} >파일 업로드</button>
         <div>
