@@ -76,8 +76,13 @@ removeImage = () => {
 render(){
     return(
         <div className="App">
-            <input type="file" name="file" id="file" onChange={this.fileHandler}/>
+           <input 
+                type="file" id="file" name="file" accept="image/*" 
+                onChange={this.fileHandler}
+                style={{display:'none'}}
+                ref={fileInput => this.fileInput= fileInput}/>
         
+        <button onClick={() =>this.fileInput.click()}>파일 선택</button>
         <button onClick={this.fileUploadHandler} >파일 업로드</button>
         <div>
         {
